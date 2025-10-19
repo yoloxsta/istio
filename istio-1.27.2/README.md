@@ -125,3 +125,5 @@ milestone cannot be considered achieved if the issue isn't resolved.
 ###
 
 - https://dhruv-mavani.medium.com/istio-kubernetes-explained-step-by-step-hands-on-guide-020404d6ba7b
+
+- https://ferrishall.dev/istio-service-mesh-deepish-dive-architecture-traffic-control-security-and-observability
