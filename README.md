@@ -93,3 +93,7 @@ spec:
 🔹 Conclusion
 - Use VirtualService to control request routing (paths, weights, retries).
 - Use DestinationRule to define subsets and apply traffic policies.
+
+#
+
+- https://dhruv-mavani.medium.com/istio-kubernetes-explained-step-by-step-hands-on-guide-020404d6ba7b
