@@ -94,6 +94,15 @@ spec:
 - Use VirtualService to control request routing (paths, weights, retries).
 - Use DestinationRule to define subsets and apply traffic policies.
 
-#
+# KodeKloud
+```
+export INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="http2")].nodePort}')
+export SECURE_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="https")].nodePort}')
+export TCP_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgateway -o jsonpath='{.spec.ports[?(@.name=="tcp")].nodePort}')
+export INGRESS_HOST=$(kubectl get po -l istio=ingressgateway -n istio-system -o jsonpath='{.items[0].status.hostIP}')
 
-- https://dhruv-mavani.medium.com/istio-kubernetes-explained-step-by-step-hands-on-guide-020404d6ba7b
+---
+
+curl -s -I -HHost:httpbin.example.com "http://$INGRESS_HOST:$INGRESS_PORT/headers"
+
+```
