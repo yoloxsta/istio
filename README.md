@@ -102,7 +102,6 @@ export TCP_INGRESS_PORT=$(kubectl -n istio-system get service istio-ingressgatew
 export INGRESS_HOST=$(kubectl get po -l istio=ingressgateway -n istio-system -o jsonpath='{.items[0].status.hostIP}')
 
 ---
-
 curl -s -I -HHost:httpbin.example.com "http://$INGRESS_HOST:$INGRESS_PORT/headers"
 
 ```
