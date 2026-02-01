@@ -105,3 +105,28 @@ export INGRESS_HOST=$(kubectl get po -l istio=ingressgateway -n istio-system -o 
 curl -s -I -HHost:httpbin.example.com "http://$INGRESS_HOST:$INGRESS_PORT/headers"
 
 ```
+### Installation (Just Lab)
+```
+- helm repo add istio https://istio-release.storage.googleapis.com/charts
+
+When installing Istio using Helm, you need to install 3 charts:
+istio-base
+istiod
+istio-ingress
+
+- helm repo update
+- helm install istio-base istio/base --namespace istio-system --create-namespace --version 1.26.0 --set profile=demo
+- helm install istiod istio/istiod --namespace istio-system --version 1.26.0 --set profile=demo --set pilot.resources.requests.memory=128Mi --set pilot.resources.requests.cpu=250m
+- helm install istio-ingress istio/gateway --namespace istio-ingress --create-namespace --version 1.26.0
+- kubectl label namespace default istio-injection=enabled
+
+$ kubectl annotate svc istio-ingress -n istio-ingress \
+  service.beta.kubernetes.io/aws-load-balancer-type=external \
+  service.beta.kubernetes.io/aws-load-balancer-nlb-target-type=ip \
+  service.beta.kubernetes.io/aws-load-balancer-scheme=internet-facing \
+  --overwrite
+service/istio-ingress annotated
+
+$ kubectl rollout restart deployment istio-ingress -n istio-ingress
+deployment.apps/istio-ingress restarted
+```
