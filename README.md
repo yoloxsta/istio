@@ -130,3 +130,27 @@ service/istio-ingress annotated
 $ kubectl rollout restart deployment istio-ingress -n istio-ingress
 deployment.apps/istio-ingress restarted
 ```
+### SSL (ACM)
+```
+$ ls
+bye.yaml                 hello.yaml                     private_key_2.txt
+certificate_chain_2.txt  hello-bye-gateway.yaml         private_key_decrypted.pem
+certificate-2.txt        hello-bye-virtualservice.yaml  sta-api-combined.pem
+===
+- dos2unix private_key_2.txt
+- openssl pkcs8 -in private_key_2.txt -out private_key_decrypted.pem
+
+- OpenSSL will prompt:
+Enter pass phrase for private_key_2.txt:
+Enter the passphrase from AWS ACM export.
+
+You need to combine the certificate and chain when creating the TLS secret.
+Concatenate certificate + chain:
+- cat certificate-2.txt certificate_chain_2.txt > sta-api-combined.pem
+
+kubectl create secret tls sta-api-tls-secret \
+  --cert=sta-api-combined.pem \
+  --key=private_key_decrypted.pem \
+  -n istio-ingress
+
+```
