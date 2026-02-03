@@ -4,7 +4,6 @@ curl -L https://istio.io/downloadIstio | sh -
 cd istio-<version-number>
 export PATH=$PWD/bin:$PATH
 istioctl install --set profile=demo -y
-
 ```
 ### VirtualService vs DestinationRule in Istio
 - Both VirtualService and DestinationRule work together to control traffic in Istio, but they serve different purposes.
